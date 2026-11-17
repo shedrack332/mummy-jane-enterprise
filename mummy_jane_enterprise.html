@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123b32">
+  <title>Mummy Jane Enterprise | Order Online</title>
+  <style>
+    :root {
+      --green: #145b45;
+      --green-dark: #103f33;
+      --green-light: #e9f5ef;
+      --gold: #e8b84a;
+      --ink: #1d2925;
+      --muted: #68756f;
+      --line: #e3eae6;
+      --paper: #ffffff;
+      --background: #f5f8f6;
+      --danger: #b42318;
+      --shadow: 0 12px 32px rgba(16, 63, 51, .08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .topbar {
+      background: var(--green-dark);
+      color: #fff;
+      padding: 9px 16px;
+      text-align: center;
+      font-size: .88rem;
+    }
+    header {
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .nav {
+      max-width: 1120px;
+      margin: auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 43px;
+      height: 43px;
+      flex: 0 0 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      color: #fff;
+      background: var(--green);
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 1.02rem;
+      line-height: 1.2;
+      color: var(--green-dark);
+    }
+    .brand small { color: var(--muted); font-size: .76rem; }
+    .nav-actions { display: flex; align-items: center; gap: 9px; }
+    .nav-link {
+      text-decoration: none;
+      color: var(--green-dark);
+      font-weight: 700;
+      font-size: .9rem;
+      padding: 9px 11px;
+      border-radius: 9px;
+    }
+    .nav-link:hover { background: var(--green-light); }
+    .cart-button, .primary-button, .whatsapp-button {
+      border: 0;
+      border-radius: 10px;
+      background: var(--green);
+      color: #fff;
+      font-weight: 700;
+      padding: 11px 15px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .cart-button { white-space: nowrap; }
+    .cart-count {
+      min-width: 22px;
+      height: 22px;
+      border-radius: 20px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0 5px;
+      color: var(--green-dark);
+      background: #fff;
+      font-size: .78rem;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, rgba(16,63,51,.98), rgba(20,91,69,.92));
+      color: #fff;
+      padding: 54px 18px 50px;
+    }
+    .hero-inner { max-width: 1120px; margin: auto; }
+    .eyebrow {
+      color: #f3d58f;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 700;
+      font-size: .76rem;
+    }
+    .hero h2 {
+      max-width: 700px;
+      margin: 10px 0 12px;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      line-height: 1.08;
+    }
+    .hero p { max-width: 620px; color: #e1eee8; margin: 0 0 23px; }
+    .hero .primary-button {
+      background: var(--gold);
+      color: #263026;
+      padding: 13px 19px;
+    }
+
+    main { max-width: 1120px; margin: auto; padding: 34px 18px 60px; }
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 17px;
+    }
+    .section-heading h2 { margin: 0; font-size: 1.55rem; color: var(--green-dark); }
+    .section-heading p { margin: 4px 0 0; color: var(--muted); font-size: .92rem; }
+    .search-wrap { margin: 20px 0 22px; }
+    .search-wrap input {
+      width: 100%;
+      padding: 14px 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      outline: none;
+      background: #fff;
+    }
+    .search-wrap input:focus, input:focus, textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(20,91,69,.1);
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+    .product-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 17px;
+      box-shadow: 0 4px 15px rgba(20,50,40,.035);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+    }
+    .product-card h3 { margin: 0; font-size: 1rem; }
+    .product-category {
+      color: var(--muted);
+      font-size: .76rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .price-list { display: grid; gap: 7px; }
+    .price-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: .88rem;
+      border-top: 1px solid #f0f3f1;
+      padding-top: 7px;
+    }
+    .price-option strong { color: var(--green-dark); white-space: nowrap; }
+    .add-row { display: flex; gap: 8px; margin-top: auto; }
+    .add-row select {
+      min-width: 0;
+      flex: 1;
+      padding: 9px 7px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      font-size: .85rem;
+    }
+    .add-button {
+      border: 0;
+      border-radius: 8px;
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-weight: 700;
+      padding: 9px 12px;
+    }
+    .add-button:hover { background: #d9eee3; }
+    .no-results {
+      grid-column: 1 / -1;
+      padding: 24px;
+      background: #fff;
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .lower-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 42px;
+    }
+    .info-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 21px;
+      box-shadow: var(--shadow);
+    }
+    .info-card h2 { color: var(--green-dark); margin: 0 0 12px; font-size: 1.2rem; }
+    .bank-row {
+      padding: 10px 0;
+      border-top: 1px solid #eef2ef;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: .92rem;
+    }
+    .bank-row span { color: var(--muted); }
+    .bank-row strong { text-align: right; overflow-wrap: anywhere; }
+    .note { color: var(--muted); font-size: .86rem; margin: 12px 0 0; }
+
+    .cart-section { margin-top: 42px; }
+    .cart-panel {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+    .empty-cart { color: var(--muted); text-align: center; padding: 20px 5px; }
+    .cart-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 13px 0;
+      border-bottom: 1px solid #edf1ee;
+    }
+    .cart-item:last-of-type { border-bottom: 0; }
+    .cart-item-name { font-weight: 700; }
+    .cart-item-meta { color: var(--muted); font-size: .82rem; }
+    .qty-controls { display: flex; align-items: center; gap: 8px; }
+    .qty-controls button {
+      width: 29px;
+      height: 29px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--green-dark);
+      font-weight: 700;
+    }
+    .qty-controls span { min-width: 18px; text-align: center; }
+    .item-total { font-weight: 700; white-space: nowrap; }
+    .cart-summary {
+      border-top: 1px solid var(--line);
+      margin-top: 13px;
+      padding-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      font-size: 1.08rem;
+    }
+    .cart-summary strong { color: var(--green-dark); font-size: 1.3rem; }
+    .checkout-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .checkout-form label { display: grid; gap: 6px; font-size: .86rem; font-weight: 700; }
+    .checkout-form input, .checkout-form textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      outline: none;
+      font-weight: 400;
+    }
+    .checkout-form .full { grid-column: 1 / -1; }
+    .checkout-form textarea { min-height: 72px; resize: vertical; }
+    .checkout-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+    .whatsapp-button { background: #168b50; }
+    .secondary-button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 11px 15px;
+      font-weight: 700;
+    }
+    .small-print { color: var(--muted); font-size: .8rem; margin-top: 12px; }
+
+    footer {
+      background: #102f28;
+      color: #d9e8e0;
+      padding: 25px 18px;
+      text-align: center;
+      font-size: .88rem;
+    }
+    footer strong { color: #fff; }
+
+    @media (max-width: 850px) {
+      .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 600px) {
+      .nav { padding: 11px 13px; }
+      .brand h1 { font-size: .9rem; }
+      .brand small { font-size: .7rem; }
+      .nav-link { display: none; }
+      .cart-button { padding: 9px 10px; font-size: .85rem; }
+      .hero { padding: 42px 17px; }
+      main { padding: 27px 13px 45px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .lower-grid { grid-template-columns: 1fr; }
+      .checkout-form { grid-template-columns: 1fr; }
+      .checkout-form .full { grid-column: auto; }
+      .cart-item { grid-template-columns: minmax(0, 1fr) auto; }
+      .item-total { grid-column: 1 / -1; text-align: right; }
+      .section-heading { align-items: start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">Quality products • Easy ordering • Prices in Nigerian Naira (₦)</div>
+
+  <header>
+    <nav class="nav" aria-label="Main navigation">
+      <div class="brand">
+        <div class="brand-mark">MJ</div>
+        <div>
+          <h1>MUMMY JANE ENTERPRISE</h1>
+          <small>Shop with confidence</small>
+        </div>
+      </div>
+      <div class="nav-actions">
+        <a class="nav-link" href="#products">Products</a>
+        <a class="nav-link" href="#payment">Payment</a>
+        <button class="cart-button" type="button" onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">
+          Cart <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Welcome to our store</div>
+      <h2>Order your products easily and conveniently.</h2>
+      <p>Browse the catalogue, choose your preferred pack size, add items to your cart and send your order directly to us on WhatsApp.</p>
+      <a class="primary-button" href="#products">Browse products ↓</a>
+    </div>
+  </section>
+
+  <main>
+    <section id="products">
+      <div class="section-heading">
+        <div>
+          <h2>Our Products</h2>
+          <p>Select a product and pack size to add it to your cart.</p>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <input id="productSearch" type="search" placeholder="Search products..." aria-label="Search products">
+      </div>
+      <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <section class="cart-section" id="cart">
+      <div class="section-heading">
+        <div>
+          <h2>Your Shopping Cart</h2>
+          <p>Review your items before sending your order.</p>
+        </div>
+      </div>
+      <div class="cart-panel">
+        <div id="cartItems"><div class="empty-cart">Your cart is empty. Add products to get started.</div></div>
+        <div class="cart-summary">
+          <span>Order total</span>
+          <strong id="cartTotal">₦0</strong>
+        </div>
+
+        <div class="checkout-form">
+          <label>
+            Your name
+            <input id="customerName" type="text" placeholder="Enter your name" autocomplete="name">
+          </label>
+          <label>
+            Your phone number
+            <input id="customerPhone" type="tel" placeholder="e.g. 08012345678" autocomplete="tel">
+          </label>
+          <label class="full">
+            Delivery address / order note (optional)
+            <textarea id="customerNote" placeholder="Enter your delivery address or any extra information"></textarea>
+          </label>
+        </div>
+
+        <div class="checkout-actions">
+          <button class="whatsapp-button" type="button" onclick="sendWhatsAppOrder()">Send order on WhatsApp</button>
+          <button class="secondary-button" type="button" onclick="clearCart()">Clear cart</button>
+        </div>
+        <p class="small-print">Your order will be sent to Mummy Jane Enterprise on WhatsApp. Please confirm availability, delivery arrangements and the final amount with the business.</p>
+      </div>
+    </section>
+
+    <section class="lower-grid" id="payment">
+      <div class="info-card">
+        <h2>Bank Transfer Details</h2>
+        <div class="bank-row"><span>Account name</span><strong>Shedrack Jane Chimara</strong></div>
+        <div class="bank-row"><span>Union Bank</span><strong>0017526275</strong></div>
+        <div class="bank-row"><span>Moniepoint</span><strong>5313650594</strong></div>
+        <p class="note">Please confirm the account details with the business before making a transfer. Send payment confirmation directly to the business.</p>
+      </div>
+      <div class="info-card">
+        <h2>Need assistance?</h2>
+        <p>Contact Mummy Jane Enterprise on WhatsApp for questions about products, orders, payment or delivery.</p>
+        <a class="whatsapp-button" href="https://wa.me/2347034693566" target="_blank" rel="noopener">Chat on WhatsApp</a>
+        <p class="note">WhatsApp: +234 703 469 3566</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>MUMMY JANE ENTERPRISE</strong><br>
+    Thank you for shopping with us.
+  </footer>
+
+  <script>
+    // Business WhatsApp number in international format, without "+" or spaces.
+    const WHATSAPP_NUMBER = "2347034693566";
+
+    // Prices supplied for Mummy Jane Enterprise. All amounts are in naira.
+    const products = [
+      { name: "50kg Bag", category: "Bags", options: [{ unit: "Dozen", price: 3200 }] },
+      { name: "100kg Bag", category: "Bags", options: [{ unit: "Dozen", price: 3800 }] },
+      { name: "300kg Wang Wang", category: "Bags", options: [{ unit: "Dozen", price: 6000 }] },
+      { name: "300kg Star Rich", category: "Bags", options: [{ unit: "Dozen", price: 5500 }] },
+      { name: "500kg Bag", category: "Bags", options: [{ unit: "Dozen", price: 7000 }] },
+      { name: "600kg Bag", category: "Bags", options: [{ unit: "Dozen", price: 8000 }] },
+      { name: "750kg Bag", category: "Bags", options: [{ unit: "Dozen", price: 10800 }] },
+      { name: "Sack Bag", category: "Other products", options: [
+        { unit: "Dozen", price: 1200 },
+        { unit: "50 pieces", price: 6400 }
+      ]},
+      { name: "Fish Nylon", category: "Nylon", options: [
+        { unit: "Dozen", price: 700 },
+        { unit: "Packet", price: 2500 }
+      ]},
+      { name: "Carpenter Nylon", category: "Nylon", options: [
+        { unit: "Dozen", price: 1200 },
+        { unit: "Packet", price: 4000 }
+      ]},
+      { name: "Plain Carpenter Nylon", category: "Nylon", options: [
+        { unit: "Dozen", price: 1000 },
+        { unit: "Packet", price: 3800 }
+      ]},
+      { name: "Black/Blue Nylon", category: "Nylon", options: [{ unit: "Packet", price: 1800 }] },
+      { name: "Black/Yellow Stripe Nylon", category: "Nylon", options: [{ unit: "Packet", price: 1800 }] },
+      { name: "Black/White Stripe Nylon", category: "Nylon", options: [{ unit: "Packet", price: 2600 }] }
+    ];
+
+    let cart = [];
+
+    function formatNaira(amount) {
+      return "₦" + Number(amount).toLocaleString("en-NG");
+    }
+
+    function renderProducts(filterText = "") {
+      const grid = document.getElementById("productsGrid");
+      const search = filterText.trim().toLowerCase();
+      const filtered = products.filter(product =>
+        (product.name + " " + product.category).toLowerCase().includes(search)
+      );
+
+      if (!filtered.length) {
+        grid.innerHTML = '<div class="no-results">No products match your search.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map((product) => {
+        const productIndex = products.indexOf(product);
+        const optionsHtml = product.options.map((option, optionIndex) =>
+          `<option value="${optionIndex}">${escapeHtml(option.unit)} — ${formatNaira(option.price)}</option>`
+        ).join("");
+
+        const priceHtml = product.options.map(option =>
+          `<div class="price-option"><span>${escapeHtml(option.unit)}</span><strong>${formatNaira(option.price)}</strong></div>`
+        ).join("");
+
+        return `
+          <article class="product-card">
+            <div class="product-category">${escapeHtml(product.category)}</div>
+            <h3>${escapeHtml(product.name)}</h3>
+            <div class="price-list">${priceHtml}</div>
+            <div class="add-row">
+              <select id="option-${productIndex}" aria-label="Choose pack size for ${escapeHtml(product.name)}">${optionsHtml}</select>
+              <button class="add-button" type="button" onclick="addToCart(${productIndex})">Add</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[character]));
+    }
+
+    function addToCart(productIndex) {
+      const product = products[productIndex];
+      const select = document.getElementById(`option-${productIndex}`);
+      if (!product || !select) return;
+
+      const option = product.options[Number(select.value)];
+      const existing = cart.find(item =>
+        item.name === product.name && item.unit === option.unit
+      );
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          name: product.name,
+          unit: option.unit,
+          price: option.price,
+          quantity: 1
+        });
+      }
+      renderCart();
+    }
+
+    function changeQuantity(index, change) {
+      if (!cart[index]) return;
+      cart[index].quantity += change;
+      if (cart[index].quantity <= 0) cart.splice(index, 1);
+      renderCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      renderCart();
+    }
+
+    function renderCart() {
+      const container = document.getElementById("cartItems");
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+      document.getElementById("cartCount").textContent = count;
+      document.getElementById("cartTotal").textContent = formatNaira(total);
+
+      if (!cart.length) {
+        container.innerHTML = '<div class="empty-cart">Your cart is empty. Add products to get started.</div>';
+        return;
+      }
+
+      container.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <div>
+            <div class="cart-item-name">${escapeHtml(item.name)}</div>
+            <div class="cart-item-meta">${escapeHtml(item.unit)} × ${formatNaira(item.price)}</div>
+          </div>
+          <div class="qty-controls" aria-label="Quantity controls">
+            <button type="button" onclick="changeQuantity(${index}, -1)" aria-label="Decrease quantity">−</button>
+            <span>${item.quantity}</span>
+            <button type="button" onclick="changeQuantity(${index}, 1)" aria-label="Increase quantity">+</button>
+          </div>
+          <div class="item-total">${formatNaira(item.price * item.quantity)}</div>
+        </div>
+      `).join("");
+    }
+
+    function sendWhatsAppOrder() {
+      if (!cart.length) {
+        alert("Your cart is empty. Please add at least one product.");
+        return;
+      }
+
+      const name = document.getElementById("customerName").value.trim();
+      const phone = document.getElementById("customerPhone").value.trim();
+      const note = document.getElementById("customerNote").value.trim();
+
+      if (!name) {
+        alert("Please enter your name before sending the order.");
+        document.getElementById("customerName").focus();
+        return;
+      }
+
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      const lines = cart.map((item, index) =>
+        `${index + 1}. ${item.name} — ${item.quantity} ${item.unit} × ${formatNaira(item.price)} = ${formatNaira(item.quantity * item.price)}`
+      );
+
+      let message = `Hello Mummy Jane Enterprise!\n\nI would like to place an order:\n\n${lines.join("\n")}\n\nOrder total: ${formatNaira(total)}\n\nCustomer name: ${name}`;
+      if (phone) message += `\nCustomer phone: ${phone}`;
+      if (note) message += `\nDelivery address / note: ${note}`;
+      message += "\n\nPlease confirm availability and delivery details. Thank you.";
+
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.location.href = whatsappUrl;
+    }
+
+    document.getElementById("productSearch").addEventListener("input", event => {
+      renderProducts(event.target.value);
+    });
+
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
